@@ -1,7 +1,6 @@
 var app = angular.module('myDirectives', []);
 
 app.directive('pending', function($timeout, $q) {
-	var waitShow = false;
 	return {
 		restrict: 'A',
 		scope: {
