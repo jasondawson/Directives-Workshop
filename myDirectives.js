@@ -4,24 +4,27 @@ app.directive('pending', function($timeout, $q) {
 	return {
 		restrict: 'A',
 		scope: {
-			show: '=',
 			request: '&'
 		},
 		link: function(scope, element, attrs) {
 
 			element.bind('click', function(request) {
-
+				attrs.$set('disabled', true);
+			
 			element.after('<img id="wait" src="img/yinyang_wait.gif" height="40px" width="40px" />');
-				 scope.show = false;
+			
+			var myEl = angular.element(document.querySelector('#wait'));
+				
+				myEl.css({'position': 'fixed', 'left': '50%', 'top': '50%'})
+				
 				dfd = $q.defer();
 				var res = scope.request().then(function(){
 					
-					var myEl = angular.element(document.querySelector('#wait'));
-					myEl.remove();
+				myEl.remove();
 
-					dfd.resolve(res);
-					scope.show = true;
-			
+				dfd.resolve(res);
+
+				attrs.$set('disabled', false);
 
 				});
 				
